@@ -453,12 +453,20 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
     Applies RGB textures to an untextured GLB using Hunyuan3D-Paint.
 
     Inputs (via generate()):
-      image_bytes  — reference image (front view), used to guide texture colours
+      image_bytes  — front view reference image (required, passed by Modly)
       params:
-        mesh_path        — absolute path to the untextured .glb file (required)
-        max_num_view     — number of paint views (6 / 7 / 8 / 9)
-        resolution       — texture resolution (512 / 1024)
-        remove_bg        — whether to strip background from reference image
+        mesh_path    — absolute path to the untextured .glb file (required)
+        left_image   — left view bytes  (optional, base64 if _is_b64 flag set)
+        back_image   — back view bytes  (optional)
+        right_image  — right view bytes (optional)
+        max_num_view — number of paint views (6–9)
+        resolution   — texture resolution (512 / 1024)
+        remove_bg    — whether to strip background from all view images
+
+    The pipeline accepts a list of PIL images for multi-view texturing:
+      pipeline(mesh, image=[front, left, back, right])
+    Each extra view gives the model more colour information to paint the
+    sides and back of the mesh, dramatically improving texture coverage.
     """
 
     MODEL_ID     = "hunyuan3d2mv-paint"
@@ -552,26 +560,59 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
         if not mesh_path.exists():
             raise FileNotFoundError("Mesh file not found: %s" % mesh_path)
 
-        print("[Hunyuan3D2mvPaintGenerator] mesh=%s views=%d res=%d remove_bg=%s" % (
-              mesh_path, max_num_view, resolution, remove_bg))
+        # -- Decode optional extra view bytes (same pattern as shape generators) --
+        import base64
 
-        # -- Preprocess reference image --
-        self._report(progress_cb, 5, "Preprocessing reference image...")
-        ref_img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        if remove_bg:
-            try:
-                ref_img = self._rembg(ref_img)
-            except Exception as e:
-                print("[Hunyuan3D2mvPaintGenerator] rembg failed (%s), using raw image." % e)
+        def _decode_param(key):
+            val = params.get(key)
+            if val is None:
+                return None
+            if params.get(key + "_is_b64"):
+                return base64.b64decode(val)
+            return val
+
+        left_bytes  = _decode_param("left_image")
+        back_bytes  = _decode_param("back_image")
+        right_bytes = _decode_param("right_image")
+
+        print("[Hunyuan3D2mvPaintGenerator] mesh=%s views=%d res=%d remove_bg=%s "
+              "extra_views=[left=%s back=%s right=%s]" % (
+              mesh_path, max_num_view, resolution, remove_bg,
+              bool(left_bytes), bool(back_bytes), bool(right_bytes)))
+
+        # -- Preprocess all view images --
+        # Front is always first; extras follow in order left→back→right.
+        # The pipeline uses image order for view weighting so front must be index 0.
+        self._report(progress_cb, 5, "Preprocessing front view...")
+        images = [self._preprocess_bytes(image_bytes, remove_bg=remove_bg)]
         self._check_cancelled(cancel_event)
 
-        # Save reference image to a temp file (pipeline expects a path or PIL)
-        tmp_dir = Path(tempfile.mkdtemp())
-        ref_img_path = tmp_dir / "reference.png"
-        ref_img.save(str(ref_img_path))
+        if left_bytes:
+            self._report(progress_cb, 7, "Preprocessing left view...")
+            images.append(self._preprocess_bytes(left_bytes, remove_bg=remove_bg))
+            self._check_cancelled(cancel_event)
+
+        if back_bytes:
+            self._report(progress_cb, 9, "Preprocessing back view...")
+            images.append(self._preprocess_bytes(back_bytes, remove_bg=remove_bg))
+            self._check_cancelled(cancel_event)
+
+        if right_bytes:
+            self._report(progress_cb, 11, "Preprocessing right view...")
+            images.append(self._preprocess_bytes(right_bytes, remove_bg=remove_bg))
+            self._check_cancelled(cancel_event)
+
+        print("[Hunyuan3D2mvPaintGenerator] Texturing with %d reference view(s)." % len(images))
+        # Pass a single PIL image when only front is provided, list for multi-view
+        image_input = images if len(images) > 1 else images[0]
+
+        # -- Load mesh --
+        import trimesh
+        self._report(progress_cb, 13, "Loading mesh...")
+        mesh = trimesh.load(str(mesh_path), force="mesh")
 
         # -- Load pipeline --
-        self._report(progress_cb, 10, "Loading paint pipeline...")
+        self._report(progress_cb, 15, "Loading paint pipeline...")
         self._load_paint_pipeline()
         self._check_cancelled(cancel_event)
 
@@ -590,19 +631,13 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
             import torch
             with torch.no_grad():
                 textured_mesh = self._paint_pipeline(
-                    mesh_path=str(mesh_path),
-                    image_path=str(ref_img_path),
+                    mesh,
+                    image=image_input,
                     max_num_view=max_num_view,
                     resolution=resolution,
                 )
         finally:
             stop_evt.set()
-            # Clean up temp files
-            try:
-                ref_img_path.unlink(missing_ok=True)
-                tmp_dir.rmdir()
-            except Exception:
-                pass
 
         self._check_cancelled(cancel_event)
 
@@ -611,8 +646,6 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
         self.outputs_dir.mkdir(parents=True, exist_ok=True)
         name     = "%d_%s_textured.glb" % (int(time.time()), uuid.uuid4().hex[:8])
         out_path = self.outputs_dir / name
-
-        # textured_mesh may be a trimesh Scene or Trimesh object
         textured_mesh.export(str(out_path))
         print("[Hunyuan3D2mvPaintGenerator] Exported textured GLB to: %s" % out_path)
 
@@ -622,6 +655,15 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
     # ------------------------------------------------------------------ #
     # Helpers
     # ------------------------------------------------------------------ #
+
+    def _preprocess_bytes(self, image_bytes, remove_bg=True):
+        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        if remove_bg:
+            try:
+                img = self._rembg(img)
+            except Exception as e:
+                print("[Hunyuan3D2mvPaintGenerator] rembg failed (%s), using raw image." % e)
+        return img
 
     def _download_paint_weights(self):
         from huggingface_hub import snapshot_download
