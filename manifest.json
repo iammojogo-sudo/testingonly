@@ -389,6 +389,12 @@
       "id": "paint-texture",
       "name": "Apply Texture (Paint)",
       "input": "image",
+      "inputs": [
+        { "id": "front_image", "type": "image", "label": "Front" },
+        { "id": "left_image",  "type": "image", "label": "Left (optional)"  },
+        { "id": "back_image",  "type": "image", "label": "Back (optional)"  },
+        { "id": "right_image", "type": "image", "label": "Right (optional)" }
+      ],
       "output": "mesh",
       "hf_repo": "tencent/Hunyuan3D-2",
       "download_check": "hunyuan3d-paint-v2-0/config.json",
@@ -419,7 +425,7 @@
           "type": "select",
           "default": 512,
           "options": [
-            { "value": 512,  "label": "512 — faster (~16 GB VRAM)"  },
+            { "value": 512,  "label": "512 — faster (~16 GB VRAM)"   },
             { "value": 1024, "label": "1024 — sharper (~21 GB VRAM)" }
           ],
           "tooltip": "Output texture map resolution. 512 is recommended unless you have 21+ GB VRAM."
@@ -431,9 +437,9 @@
           "default": "true",
           "options": [
             { "value": "true",  "label": "Yes — auto remove background" },
-            { "value": "false", "label": "No — image already masked"    }
+            { "value": "false", "label": "No — images already masked"   }
           ],
-          "tooltip": "Strip background from the reference image before texturing."
+          "tooltip": "Strip background from all reference images before texturing."
         }
       ],
       "generator_class": "Hunyuan3D2mvPaintGenerator"
