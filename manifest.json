@@ -18,10 +18,26 @@
       "name": "Generate Mesh (Turbo)",
       "input": "image",
       "inputs": [
-        { "id": "front_image", "type": "image", "label": "Front" },
-        { "id": "left_image",  "type": "image", "label": "Left"  },
-        { "id": "back_image",  "type": "image", "label": "Back"  },
-        { "id": "right_image", "type": "image", "label": "Right" }
+        {
+          "id": "front_image",
+          "type": "image",
+          "label": "Front"
+        },
+        {
+          "id": "left_image",
+          "type": "image",
+          "label": "Left"
+        },
+        {
+          "id": "back_image",
+          "type": "image",
+          "label": "Back"
+        },
+        {
+          "id": "right_image",
+          "type": "image",
+          "label": "Right"
+        }
       ],
       "output": "mesh",
       "hf_repo": "tencent/Hunyuan3D-2mv",
@@ -33,7 +49,10 @@
           "type": "select",
           "default": "hunyuan3d-dit-v2-mv-turbo",
           "options": [
-            { "value": "hunyuan3d-dit-v2-mv-turbo", "label": "hunyuan3d-dit-v2-mv-turbo" }
+            {
+              "value": "hunyuan3d-dit-v2-mv-turbo",
+              "label": "hunyuan3d-dit-v2-mv-turbo"
+            }
           ],
           "tooltip": "Model variant (locked per node)."
         },
@@ -43,9 +62,18 @@
           "type": "select",
           "default": 30,
           "options": [
-            { "value": 10, "label": "Fast (10)"     },
-            { "value": 30, "label": "Balanced (30)" },
-            { "value": 50, "label": "Quality (50)"  }
+            {
+              "value": 10,
+              "label": "Fast (10)"
+            },
+            {
+              "value": 30,
+              "label": "Balanced (30)"
+            },
+            {
+              "value": 50,
+              "label": "Quality (50)"
+            }
           ],
           "tooltip": "Number of diffusion steps."
         },
@@ -55,9 +83,18 @@
           "type": "select",
           "default": 380,
           "options": [
-            { "value": 256, "label": "Low (256)"    },
-            { "value": 380, "label": "Medium (380)" },
-            { "value": 512, "label": "High (512)"   }
+            {
+              "value": 256,
+              "label": "Low (256)"
+            },
+            {
+              "value": 380,
+              "label": "Medium (380)"
+            },
+            {
+              "value": 512,
+              "label": "High (512)"
+            }
           ],
           "tooltip": "Octree resolution. Higher = more detail but more VRAM."
         },
@@ -67,11 +104,26 @@
           "type": "select",
           "default": "5.0",
           "options": [
-            { "value": "1.0",  "label": "1.0 — loose"    },
-            { "value": "3.0",  "label": "3.0"            },
-            { "value": "5.0",  "label": "5.0 — default"  },
-            { "value": "7.5",  "label": "7.5"            },
-            { "value": "10.0", "label": "10.0 — tight"   }
+            {
+              "value": "1.0",
+              "label": "1.0 \u2014 loose"
+            },
+            {
+              "value": "3.0",
+              "label": "3.0"
+            },
+            {
+              "value": "5.0",
+              "label": "5.0 \u2014 default"
+            },
+            {
+              "value": "7.5",
+              "label": "7.5"
+            },
+            {
+              "value": "10.0",
+              "label": "10.0 \u2014 tight"
+            }
           ],
           "tooltip": "Classifier-free guidance strength. Higher = closer to input image."
         },
@@ -81,9 +133,18 @@
           "type": "select",
           "default": 8000,
           "options": [
-            { "value": 2000,  "label": "Low (2000) — less VRAM" },
-            { "value": 8000,  "label": "Medium (8000)"          },
-            { "value": 20000, "label": "High (20000) — faster"  }
+            {
+              "value": 2000,
+              "label": "Low (2000) \u2014 less VRAM"
+            },
+            {
+              "value": 8000,
+              "label": "Medium (8000)"
+            },
+            {
+              "value": 20000,
+              "label": "High (20000) \u2014 faster"
+            }
           ],
           "tooltip": "VAE decode chunk size. Lower saves VRAM; higher is faster."
         },
@@ -93,10 +154,22 @@
           "type": "select",
           "default": "1.01",
           "options": [
-            { "value": "0.75", "label": "0.75 — small"      },
-            { "value": "1.01", "label": "1.01 — default"    },
-            { "value": "1.25", "label": "1.25 — large"      },
-            { "value": "1.5",  "label": "1.5 — extra large" }
+            {
+              "value": "0.75",
+              "label": "0.75 \u2014 small"
+            },
+            {
+              "value": "1.01",
+              "label": "1.01 \u2014 default"
+            },
+            {
+              "value": "1.25",
+              "label": "1.25 \u2014 large"
+            },
+            {
+              "value": "1.5",
+              "label": "1.5 \u2014 extra large"
+            }
           ],
           "tooltip": "Bounding box scale for mesh extraction. Increase if mesh edges are being clipped."
         },
@@ -106,11 +179,26 @@
           "type": "select",
           "default": "0.0",
           "options": [
-            { "value": "-0.05", "label": "-0.05 — thicker" },
-            { "value": "-0.02", "label": "-0.02"           },
-            { "value": "0.0",   "label": "0.0 — default"   },
-            { "value": "0.02",  "label": "0.02"            },
-            { "value": "0.05",  "label": "0.05 — thinner"  }
+            {
+              "value": "-0.05",
+              "label": "-0.05 \u2014 thicker"
+            },
+            {
+              "value": "-0.02",
+              "label": "-0.02"
+            },
+            {
+              "value": "0.0",
+              "label": "0.0 \u2014 default"
+            },
+            {
+              "value": "0.02",
+              "label": "0.02"
+            },
+            {
+              "value": "0.05",
+              "label": "0.05 \u2014 thinner"
+            }
           ],
           "tooltip": "Marching cubes iso-surface level. Increase to thin the mesh; decrease to thicken it."
         },
@@ -120,8 +208,14 @@
           "type": "select",
           "default": "true",
           "options": [
-            { "value": "true",  "label": "Yes — auto remove background" },
-            { "value": "false", "label": "No — images already masked"   }
+            {
+              "value": "true",
+              "label": "Yes \u2014 auto remove background"
+            },
+            {
+              "value": "false",
+              "label": "No \u2014 images already masked"
+            }
           ],
           "tooltip": "Run rembg on input images. Disable if your images already have a transparent background."
         },
@@ -142,10 +236,26 @@
       "name": "Generate Mesh (Fast)",
       "input": "image",
       "inputs": [
-        { "id": "front_image", "type": "image", "label": "Front" },
-        { "id": "left_image",  "type": "image", "label": "Left"  },
-        { "id": "back_image",  "type": "image", "label": "Back"  },
-        { "id": "right_image", "type": "image", "label": "Right" }
+        {
+          "id": "front_image",
+          "type": "image",
+          "label": "Front"
+        },
+        {
+          "id": "left_image",
+          "type": "image",
+          "label": "Left"
+        },
+        {
+          "id": "back_image",
+          "type": "image",
+          "label": "Back"
+        },
+        {
+          "id": "right_image",
+          "type": "image",
+          "label": "Right"
+        }
       ],
       "output": "mesh",
       "hf_repo": "tencent/Hunyuan3D-2mv",
@@ -157,7 +267,10 @@
           "type": "select",
           "default": "hunyuan3d-dit-v2-mv-fast",
           "options": [
-            { "value": "hunyuan3d-dit-v2-mv-fast", "label": "hunyuan3d-dit-v2-mv-fast" }
+            {
+              "value": "hunyuan3d-dit-v2-mv-fast",
+              "label": "hunyuan3d-dit-v2-mv-fast"
+            }
           ],
           "tooltip": "Model variant (locked per node)."
         },
@@ -167,9 +280,18 @@
           "type": "select",
           "default": 30,
           "options": [
-            { "value": 10, "label": "Fast (10)"     },
-            { "value": 30, "label": "Balanced (30)" },
-            { "value": 50, "label": "Quality (50)"  }
+            {
+              "value": 10,
+              "label": "Fast (10)"
+            },
+            {
+              "value": 30,
+              "label": "Balanced (30)"
+            },
+            {
+              "value": 50,
+              "label": "Quality (50)"
+            }
           ],
           "tooltip": "Number of diffusion steps."
         },
@@ -179,9 +301,18 @@
           "type": "select",
           "default": 380,
           "options": [
-            { "value": 256, "label": "Low (256)"    },
-            { "value": 380, "label": "Medium (380)" },
-            { "value": 512, "label": "High (512)"   }
+            {
+              "value": 256,
+              "label": "Low (256)"
+            },
+            {
+              "value": 380,
+              "label": "Medium (380)"
+            },
+            {
+              "value": 512,
+              "label": "High (512)"
+            }
           ],
           "tooltip": "Octree resolution. Higher = more detail but more VRAM."
         },
@@ -191,11 +322,26 @@
           "type": "select",
           "default": "5.0",
           "options": [
-            { "value": "1.0",  "label": "1.0 — loose"   },
-            { "value": "3.0",  "label": "3.0"           },
-            { "value": "5.0",  "label": "5.0 — default" },
-            { "value": "7.5",  "label": "7.5"           },
-            { "value": "10.0", "label": "10.0 — tight"  }
+            {
+              "value": "1.0",
+              "label": "1.0 \u2014 loose"
+            },
+            {
+              "value": "3.0",
+              "label": "3.0"
+            },
+            {
+              "value": "5.0",
+              "label": "5.0 \u2014 default"
+            },
+            {
+              "value": "7.5",
+              "label": "7.5"
+            },
+            {
+              "value": "10.0",
+              "label": "10.0 \u2014 tight"
+            }
           ],
           "tooltip": "Classifier-free guidance strength. Higher = closer to input image."
         },
@@ -205,9 +351,18 @@
           "type": "select",
           "default": 8000,
           "options": [
-            { "value": 2000,  "label": "Low (2000) — less VRAM" },
-            { "value": 8000,  "label": "Medium (8000)"          },
-            { "value": 20000, "label": "High (20000) — faster"  }
+            {
+              "value": 2000,
+              "label": "Low (2000) \u2014 less VRAM"
+            },
+            {
+              "value": 8000,
+              "label": "Medium (8000)"
+            },
+            {
+              "value": 20000,
+              "label": "High (20000) \u2014 faster"
+            }
           ],
           "tooltip": "VAE decode chunk size. Lower saves VRAM; higher is faster."
         },
@@ -217,10 +372,22 @@
           "type": "select",
           "default": "1.01",
           "options": [
-            { "value": "0.75", "label": "0.75 — small"      },
-            { "value": "1.01", "label": "1.01 — default"    },
-            { "value": "1.25", "label": "1.25 — large"      },
-            { "value": "1.5",  "label": "1.5 — extra large" }
+            {
+              "value": "0.75",
+              "label": "0.75 \u2014 small"
+            },
+            {
+              "value": "1.01",
+              "label": "1.01 \u2014 default"
+            },
+            {
+              "value": "1.25",
+              "label": "1.25 \u2014 large"
+            },
+            {
+              "value": "1.5",
+              "label": "1.5 \u2014 extra large"
+            }
           ],
           "tooltip": "Bounding box scale for mesh extraction. Increase if mesh edges are being clipped."
         },
@@ -230,11 +397,26 @@
           "type": "select",
           "default": "0.0",
           "options": [
-            { "value": "-0.05", "label": "-0.05 — thicker" },
-            { "value": "-0.02", "label": "-0.02"           },
-            { "value": "0.0",   "label": "0.0 — default"   },
-            { "value": "0.02",  "label": "0.02"            },
-            { "value": "0.05",  "label": "0.05 — thinner"  }
+            {
+              "value": "-0.05",
+              "label": "-0.05 \u2014 thicker"
+            },
+            {
+              "value": "-0.02",
+              "label": "-0.02"
+            },
+            {
+              "value": "0.0",
+              "label": "0.0 \u2014 default"
+            },
+            {
+              "value": "0.02",
+              "label": "0.02"
+            },
+            {
+              "value": "0.05",
+              "label": "0.05 \u2014 thinner"
+            }
           ],
           "tooltip": "Marching cubes iso-surface level. Increase to thin the mesh; decrease to thicken it."
         },
@@ -244,8 +426,14 @@
           "type": "select",
           "default": "true",
           "options": [
-            { "value": "true",  "label": "Yes — auto remove background" },
-            { "value": "false", "label": "No — images already masked"   }
+            {
+              "value": "true",
+              "label": "Yes \u2014 auto remove background"
+            },
+            {
+              "value": "false",
+              "label": "No \u2014 images already masked"
+            }
           ],
           "tooltip": "Run rembg on input images. Disable if your images already have a transparent background."
         },
@@ -266,10 +454,26 @@
       "name": "Generate Mesh (Standard)",
       "input": "image",
       "inputs": [
-        { "id": "front_image", "type": "image", "label": "Front" },
-        { "id": "left_image",  "type": "image", "label": "Left"  },
-        { "id": "back_image",  "type": "image", "label": "Back"  },
-        { "id": "right_image", "type": "image", "label": "Right" }
+        {
+          "id": "front_image",
+          "type": "image",
+          "label": "Front"
+        },
+        {
+          "id": "left_image",
+          "type": "image",
+          "label": "Left"
+        },
+        {
+          "id": "back_image",
+          "type": "image",
+          "label": "Back"
+        },
+        {
+          "id": "right_image",
+          "type": "image",
+          "label": "Right"
+        }
       ],
       "output": "mesh",
       "hf_repo": "tencent/Hunyuan3D-2mv",
@@ -281,7 +485,10 @@
           "type": "select",
           "default": "hunyuan3d-dit-v2-mv",
           "options": [
-            { "value": "hunyuan3d-dit-v2-mv", "label": "hunyuan3d-dit-v2-mv" }
+            {
+              "value": "hunyuan3d-dit-v2-mv",
+              "label": "hunyuan3d-dit-v2-mv"
+            }
           ],
           "tooltip": "Model variant (locked per node)."
         },
@@ -291,9 +498,18 @@
           "type": "select",
           "default": 30,
           "options": [
-            { "value": 10, "label": "Fast (10)"     },
-            { "value": 30, "label": "Balanced (30)" },
-            { "value": 50, "label": "Quality (50)"  }
+            {
+              "value": 10,
+              "label": "Fast (10)"
+            },
+            {
+              "value": 30,
+              "label": "Balanced (30)"
+            },
+            {
+              "value": 50,
+              "label": "Quality (50)"
+            }
           ],
           "tooltip": "Number of diffusion steps."
         },
@@ -303,9 +519,18 @@
           "type": "select",
           "default": 380,
           "options": [
-            { "value": 256, "label": "Low (256)"    },
-            { "value": 380, "label": "Medium (380)" },
-            { "value": 512, "label": "High (512)"   }
+            {
+              "value": 256,
+              "label": "Low (256)"
+            },
+            {
+              "value": 380,
+              "label": "Medium (380)"
+            },
+            {
+              "value": 512,
+              "label": "High (512)"
+            }
           ],
           "tooltip": "Octree resolution. Higher = more detail but more VRAM."
         },
@@ -315,11 +540,26 @@
           "type": "select",
           "default": "5.0",
           "options": [
-            { "value": "1.0",  "label": "1.0 — loose"   },
-            { "value": "3.0",  "label": "3.0"           },
-            { "value": "5.0",  "label": "5.0 — default" },
-            { "value": "7.5",  "label": "7.5"           },
-            { "value": "10.0", "label": "10.0 — tight"  }
+            {
+              "value": "1.0",
+              "label": "1.0 \u2014 loose"
+            },
+            {
+              "value": "3.0",
+              "label": "3.0"
+            },
+            {
+              "value": "5.0",
+              "label": "5.0 \u2014 default"
+            },
+            {
+              "value": "7.5",
+              "label": "7.5"
+            },
+            {
+              "value": "10.0",
+              "label": "10.0 \u2014 tight"
+            }
           ],
           "tooltip": "Classifier-free guidance strength. Higher = closer to input image."
         },
@@ -329,9 +569,18 @@
           "type": "select",
           "default": 8000,
           "options": [
-            { "value": 2000,  "label": "Low (2000) — less VRAM" },
-            { "value": 8000,  "label": "Medium (8000)"          },
-            { "value": 20000, "label": "High (20000) — faster"  }
+            {
+              "value": 2000,
+              "label": "Low (2000) \u2014 less VRAM"
+            },
+            {
+              "value": 8000,
+              "label": "Medium (8000)"
+            },
+            {
+              "value": 20000,
+              "label": "High (20000) \u2014 faster"
+            }
           ],
           "tooltip": "VAE decode chunk size. Lower saves VRAM; higher is faster."
         },
@@ -341,10 +590,22 @@
           "type": "select",
           "default": "1.01",
           "options": [
-            { "value": "0.75", "label": "0.75 — small"      },
-            { "value": "1.01", "label": "1.01 — default"    },
-            { "value": "1.25", "label": "1.25 — large"      },
-            { "value": "1.5",  "label": "1.5 — extra large" }
+            {
+              "value": "0.75",
+              "label": "0.75 \u2014 small"
+            },
+            {
+              "value": "1.01",
+              "label": "1.01 \u2014 default"
+            },
+            {
+              "value": "1.25",
+              "label": "1.25 \u2014 large"
+            },
+            {
+              "value": "1.5",
+              "label": "1.5 \u2014 extra large"
+            }
           ],
           "tooltip": "Bounding box scale for mesh extraction. Increase if mesh edges are being clipped."
         },
@@ -354,11 +615,26 @@
           "type": "select",
           "default": "0.0",
           "options": [
-            { "value": "-0.05", "label": "-0.05 — thicker" },
-            { "value": "-0.02", "label": "-0.02"           },
-            { "value": "0.0",   "label": "0.0 — default"   },
-            { "value": "0.02",  "label": "0.02"            },
-            { "value": "0.05",  "label": "0.05 — thinner"  }
+            {
+              "value": "-0.05",
+              "label": "-0.05 \u2014 thicker"
+            },
+            {
+              "value": "-0.02",
+              "label": "-0.02"
+            },
+            {
+              "value": "0.0",
+              "label": "0.0 \u2014 default"
+            },
+            {
+              "value": "0.02",
+              "label": "0.02"
+            },
+            {
+              "value": "0.05",
+              "label": "0.05 \u2014 thinner"
+            }
           ],
           "tooltip": "Marching cubes iso-surface level. Increase to thin the mesh; decrease to thicken it."
         },
@@ -368,8 +644,14 @@
           "type": "select",
           "default": "true",
           "options": [
-            { "value": "true",  "label": "Yes — auto remove background" },
-            { "value": "false", "label": "No — images already masked"   }
+            {
+              "value": "true",
+              "label": "Yes \u2014 auto remove background"
+            },
+            {
+              "value": "false",
+              "label": "No \u2014 images already masked"
+            }
           ],
           "tooltip": "Run rembg on input images. Disable if your images already have a transparent background."
         },
@@ -390,15 +672,48 @@
       "name": "Apply Texture (Paint)",
       "input": "image",
       "inputs": [
-        { "id": "front_image", "type": "image", "label": "Front" },
-        { "id": "left_image",  "type": "image", "label": "Left (optional)"  },
-        { "id": "back_image",  "type": "image", "label": "Back (optional)"  },
-        { "id": "right_image", "type": "image", "label": "Right (optional)" }
+        {
+          "id": "front_image",
+          "type": "image",
+          "label": "Front"
+        },
+        {
+          "id": "left_image",
+          "type": "image",
+          "label": "Left (optional)"
+        },
+        {
+          "id": "back_image",
+          "type": "image",
+          "label": "Back (optional)"
+        },
+        {
+          "id": "right_image",
+          "type": "image",
+          "label": "Right (optional)"
+        }
       ],
       "output": "mesh",
       "hf_repo": "tencent/Hunyuan3D-2",
       "download_check": "hunyuan3d-paint-v2-0/model_index.json",
       "params_schema": [
+        {
+          "id": "paint_variant",
+          "label": "Paint Model",
+          "type": "select",
+          "default": "hunyuan3d-paint-v2-0",
+          "options": [
+            {
+              "value": "hunyuan3d-paint-v2-0",
+              "label": "Standard"
+            },
+            {
+              "value": "hunyuan3d-paint-v2-0-turbo",
+              "label": "Turbo \u2014 faster"
+            }
+          ],
+          "tooltip": "Which paint model to use. Turbo is faster but may produce slightly lower quality textures."
+        },
         {
           "id": "mesh_path",
           "label": "Mesh Path",
@@ -412,10 +727,22 @@
           "type": "select",
           "default": 6,
           "options": [
-            { "value": 6, "label": "6 — faster, less VRAM" },
-            { "value": 7, "label": "7"                     },
-            { "value": 8, "label": "8"                     },
-            { "value": 9, "label": "9 — best coverage"     }
+            {
+              "value": 6,
+              "label": "6 \u2014 faster, less VRAM"
+            },
+            {
+              "value": 7,
+              "label": "7"
+            },
+            {
+              "value": 8,
+              "label": "8"
+            },
+            {
+              "value": 9,
+              "label": "9 \u2014 best coverage"
+            }
           ],
           "tooltip": "How many angles the model paints from. More views = better coverage but more VRAM and time."
         },
@@ -425,8 +752,14 @@
           "type": "select",
           "default": 512,
           "options": [
-            { "value": 512,  "label": "512 — faster (~16 GB VRAM)"   },
-            { "value": 1024, "label": "1024 — sharper (~21 GB VRAM)" }
+            {
+              "value": 512,
+              "label": "512 \u2014 faster (~16 GB VRAM)"
+            },
+            {
+              "value": 1024,
+              "label": "1024 \u2014 sharper (~21 GB VRAM)"
+            }
           ],
           "tooltip": "Output texture map resolution. 512 is recommended unless you have 21+ GB VRAM."
         },
@@ -436,8 +769,14 @@
           "type": "select",
           "default": "true",
           "options": [
-            { "value": "true",  "label": "Yes — auto remove background" },
-            { "value": "false", "label": "No — images already masked"   }
+            {
+              "value": "true",
+              "label": "Yes \u2014 auto remove background"
+            },
+            {
+              "value": "false",
+              "label": "No \u2014 images already masked"
+            }
           ],
           "tooltip": "Strip background from all reference images before texturing."
         }
