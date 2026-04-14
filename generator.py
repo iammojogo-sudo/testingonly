@@ -469,7 +469,7 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
     sides and back of the mesh, dramatically improving texture coverage.
     """
 
-    MODEL_ID     = "hunyuan3d2mv-paint"
+    MODEL_ID     = "hunyuan3d2mv/paint-texture"
     DISPLAY_NAME = "Hunyuan3D-2mv Paint"
     VRAM_GB      = 16   # paint pipeline needs ~16-21 GB; warn user
 
