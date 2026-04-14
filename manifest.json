@@ -397,7 +397,7 @@
       ],
       "output": "mesh",
       "hf_repo": "tencent/Hunyuan3D-2",
-      "download_check": "hunyuan3d-paint-v2-0/config.json",
+      "download_check": "hunyuan3d-paint-v2-0/model_index.json",
       "params_schema": [
         {
           "id": "mesh_path",
