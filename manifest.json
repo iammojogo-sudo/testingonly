@@ -695,31 +695,20 @@
       ],
       "output": "mesh",
       "hf_repo": "tencent/Hunyuan3D-2",
-      "download_check": "hunyuan3d-paint-v2-0/model_index.json",
+      "download_check": "hunyuan3d-paint-v2-0/config.json",
       "params_schema": [
-        {
-          "id": "paint_variant",
-          "label": "Paint Model",
-          "type": "select",
-          "default": "hunyuan3d-paint-v2-0",
-          "options": [
-            {
-              "value": "hunyuan3d-paint-v2-0",
-              "label": "Standard"
-            },
-            {
-              "value": "hunyuan3d-paint-v2-0-turbo",
-              "label": "Turbo \u2014 faster"
-            }
-          ],
-          "tooltip": "Which paint model to use. Turbo is faster but may produce slightly lower quality textures."
-        },
         {
           "id": "mesh_path",
           "label": "Mesh Path",
-          "type": "string",
+          "type": "file",
           "default": "",
-          "tooltip": "Full path to your untextured .glb file. Example: C:\\Users\\You\\mesh.glb"
+          "tooltip": "Select your untextured mesh file (.glb, .obj, .stl, or .ply)",
+          "accept": [
+            ".glb",
+            ".obj",
+            ".stl",
+            ".ply"
+          ]
         },
         {
           "id": "max_num_view",
