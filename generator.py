@@ -469,7 +469,7 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
     sides and back of the mesh, dramatically improving texture coverage.
     """
 
-    MODEL_ID     = "hunyuan3d2mv-paint"
+    MODEL_ID     = "hunyuan3d2mv/paint-texture"
     DISPLAY_NAME = "Hunyuan3D-2mv Paint"
     VRAM_GB      = 16   # paint pipeline needs ~16-21 GB; warn user
 
@@ -512,25 +512,21 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
         # Lazy-load the pipeline on first generate() call so we can
         # pass the correct pretrained path at that point
         self._paint_pipeline = None
-        self._loaded_paint_variant = None
         self._model = True
         print("[Hunyuan3D2mvPaintGenerator] Ready on %s." % device)
 
-    def _load_paint_pipeline(self, subfolder=None):
-        subfolder = subfolder or self._PAINT_SUBFOLDER
-        if self._paint_pipeline is not None and self._loaded_paint_variant == subfolder:
+    def _load_paint_pipeline(self):
+        if self._paint_pipeline is not None:
             return
-        print("[Hunyuan3D2mvPaintGenerator] Loading paint pipeline (%s)..." % subfolder)
+        print("[Hunyuan3D2mvPaintGenerator] Loading paint pipeline...")
         self._paint_pipeline = self._Pipeline.from_pretrained(
             str(self.model_dir),
-            subfolder=subfolder,
+            subfolder=self._PAINT_SUBFOLDER,
         )
-        self._loaded_paint_variant = subfolder
         print("[Hunyuan3D2mvPaintGenerator] Paint pipeline loaded.")
 
     def unload(self):
         self._paint_pipeline = None
-        self._loaded_paint_variant = None
         self._model = None
         try:
             import torch
@@ -551,11 +547,10 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
         cancel_event=None,
     ):
         # -- Parse params --
-        mesh_path     = params.get("mesh_path", "").strip()
-        max_num_view  = _safe_int(params.get("max_num_view"), 6)
-        resolution    = _safe_int(params.get("resolution"), 512)
-        remove_bg     = _safe_bool(params.get("remove_bg"), True)
-        paint_variant = params.get("paint_variant") or self._PAINT_SUBFOLDER
+        mesh_path    = params.get("mesh_path", "").strip()
+        max_num_view = _safe_int(params.get("max_num_view"), 6)
+        resolution   = _safe_int(params.get("resolution"), 512)
+        remove_bg    = _safe_bool(params.get("remove_bg"), True)
 
         if not mesh_path:
             raise ValueError(
@@ -618,7 +613,7 @@ class Hunyuan3D2mvPaintGenerator(BaseGenerator):
 
         # -- Load pipeline --
         self._report(progress_cb, 15, "Loading paint pipeline...")
-        self._load_paint_pipeline(paint_variant)
+        self._load_paint_pipeline()
         self._check_cancelled(cancel_event)
 
         # -- Run texture synthesis --
